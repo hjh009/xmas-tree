@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: xmas-tree
+    env: java
+    buildCommand: ./gradlew clean build -x test
+    startCommand: java -jar build/libs/xmas-tree-0.0.1-SNAPSHOT.jar
+    envVars:
+      - key: JAVA_TOOL_OPTIONS
+        value: "-XX:+UseContainerSupport -XX:MaxRAMPercentage=75.0"
