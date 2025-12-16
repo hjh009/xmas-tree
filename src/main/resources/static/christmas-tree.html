@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>크리스마스 트리</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(180deg, #0a1128 0%, #1e3a5f 30%, #2a5298 60%, #7e22ce 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            overflow-x: hidden;
+            overflow-y: auto;
+            font-family: 'Arial', sans-serif;
+            padding: 20px 20px 80px;
+        }
+
+        .message {
+            color: white;
+            font-size: 3em;
+            font-weight: bold;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 215, 0, 0.6);
+            animation: messageGlow 2s ease-in-out infinite;
+            white-space: nowrap;
+            margin-bottom: 50px;
+            z-index: 10;
+            position: relative;
+        }
+
+        @keyframes messageGlow {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.8), 0 0 40px rgba(255, 215, 0, 0.6);
+                transform: scale(1);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(255, 255, 255, 1), 0 0 60px rgba(255, 215, 0, 0.8);
+                transform: scale(1.05);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding-bottom: 50px;
+        }
+
+        .tree {
+            position: relative;
+            width: 0;
+            height: 820px;
+            margin-bottom: 0;
+        }
+
+        .tree-layer {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .branch {
+            width: 0;
+            height: 0;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* 더 세밀한 트리 레이어들 */
+        .layer1 {
+            top: 50px;
+        }
+        .layer1 .branch:nth-child(1) {
+            border-left: 30px solid transparent;
+            border-right: 30px solid transparent;
+            border-bottom: 50px solid #0d6832;
+            top: 0;
+            filter: drop-shadow(0 2px 8px rgba(0, 100, 0, 0.4));
+        }
+
+        .layer2 {
+            top: 90px;
+        }
+        .layer2 .branch:nth-child(1) {
+            border-left: 45px solid transparent;
+            border-right: 45px solid transparent;
+            border-bottom: 60px solid #0f7238;
+            top: 0;
+            filter: drop-shadow(0 2px 8px rgba(0, 100, 0, 0.4));
+        }
+
+        .layer3 {
+            top: 140px;
+        }
+        .layer3 .branch:nth-child(1) {
+            border-left: 60px solid transparent;
+            border-right: 60px solid transparent;
+            border-bottom: 70px solid #0d6832;
+            top: 0;
+            filter: drop-shadow(0 2px 10px rgba(0, 100, 0, 0.4));
+        }
+
+        .layer4 {
+            top: 200px;
+        }
+        .layer4 .branch:nth-child(1) {
+            border-left: 75px solid transparent;
+            border-right: 75px solid transparent;
+            border-bottom: 80px solid #0f7238;
+            top: 0;
+            filter: drop-shadow(0 2px 10px rgba(0, 100, 0, 0.4));
+        }
+
+        .layer5 {
+            top: 270px;
+        }
+        .layer5 .branch:nth-child(1) {
+            border-left: 90px solid transparent;
+            border-right: 90px solid transparent;
+            border-bottom: 90px solid #0d6832;
+            top: 0;
+            filter: drop-shadow(0 2px 12px rgba(0, 100, 0, 0.4));
+        }
+
+        .layer6 {
+            top: 350px;
+        }
+        .layer6 .branch:nth-child(1) {
+            border-left: 105px solid transparent;
+            border-right: 105px solid transparent;
+            border-bottom: 100px solid #0f7238;
+            top: 0;
+            filter: drop-shadow(0 2px 12px rgba(0, 100, 0, 0.4));
+        }
+
+        .layer7 {
+            top: 440px;
+        }
+        .layer7 .branch:nth-child(1) {
+            border-left: 120px solid transparent;
+            border-right: 120px solid transparent;
+            border-bottom: 110px solid #0d6832;
+            top: 0;
+            filter: drop-shadow(0 2px 15px rgba(0, 100, 0, 0.4));
+        }
+
+        .layer8 {
+            top: 540px;
+        }
+        .layer8 .branch:nth-child(1) {
+            border-left: 135px solid transparent;
+            border-right: 135px solid transparent;
+            border-bottom: 120px solid #0f7238;
+            top: 0;
+            filter: drop-shadow(0 2px 15px rgba(0, 100, 0, 0.4));
+        }
+
+        .trunk {
+            width: 60px;
+            height: 80px;
+            background: linear-gradient(to right, #5d4037 0%, #6d4c41 50%, #5d4037 100%);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: 640px;
+            border-radius: 8px;
+            box-shadow:
+                0 5px 20px rgba(0, 0, 0, 0.4),
+                inset -5px 0 10px rgba(0, 0, 0, 0.3),
+                inset 5px 0 10px rgba(255, 255, 255, 0.1);
+        }
+
+        .trunk::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 20%;
+            background: rgba(0, 0, 0, 0.2);
+            bottom: 0;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .star {
+            position: absolute;
+            top: 0px;
+            left: 50%;
+            transform: translateX(-50%) rotate(0deg);
+            font-size: 60px;
+            animation: starRotate 4s ease-in-out infinite;
+            filter: drop-shadow(0 0 25px #ffd700) drop-shadow(0 0 50px #ffed4e);
+            z-index: 100;
+        }
+
+        @keyframes starRotate {
+            0%, 100% {
+                transform: translateX(-50%) rotate(0deg) scale(1);
+                filter: drop-shadow(0 0 25px #ffd700) drop-shadow(0 0 50px #ffed4e);
+            }
+            50% {
+                transform: translateX(-50%) rotate(180deg) scale(1.15);
+                filter: drop-shadow(0 0 35px #ffd700) drop-shadow(0 0 70px #ffed4e);
+            }
+        }
+
+        .ornament {
+            position: absolute;
+            border-radius: 50%;
+            animation: ornamentSwing 3s ease-in-out infinite;
+            box-shadow:
+                inset -2px -2px 5px rgba(0, 0, 0, 0.3),
+                inset 2px 2px 5px rgba(255, 255, 255, 0.5),
+                0 0 15px currentColor;
+        }
+
+        .ornament::before {
+            content: '';
+            position: absolute;
+            top: -3px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 6px;
+            background: #8b7355;
+            border-radius: 2px;
+        }
+
+        @keyframes ornamentSwing {
+            0%, 100% {
+                transform: rotate(-5deg);
+            }
+            50% {
+                transform: rotate(5deg);
+            }
+        }
+
+        .light {
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: lightTwinkle 1.5s ease-in-out infinite;
+        }
+
+        @keyframes lightTwinkle {
+            0%, 100% {
+                opacity: 1;
+                box-shadow: 0 0 15px currentColor, 0 0 30px currentColor;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.4;
+                box-shadow: 0 0 5px currentColor, 0 0 10px currentColor;
+                transform: scale(0.9);
+            }
+        }
+
+        .garland {
+            position: absolute;
+            width: 100%;
+            height: 3px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .snowflake {
+            position: fixed;
+            top: -10px;
+            color: white;
+            font-size: 1.2em;
+            animation: fall linear infinite;
+            z-index: 0;
+            text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+            }
+        }
+
+        .gift {
+            position: absolute;
+            border-radius: 5px;
+            box-shadow:
+                0 8px 25px rgba(0, 0, 0, 0.4),
+                inset -3px -3px 8px rgba(0, 0, 0, 0.2),
+                inset 3px 3px 8px rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .gift:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow:
+                0 12px 35px rgba(0, 0, 0, 0.5),
+                inset -3px -3px 8px rgba(0, 0, 0, 0.2),
+                inset 3px 3px 8px rgba(255, 255, 255, 0.2);
+        }
+
+        .gift:before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 10px;
+            background: linear-gradient(to bottom, #ffd700, #ffed4e);
+            top: 50%;
+            transform: translateY(-50%);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .gift:after {
+            content: '';
+            position: absolute;
+            width: 10px;
+            height: 100%;
+            background: linear-gradient(to right, #ffd700, #ffed4e);
+            left: 50%;
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+
+        .ribbon-bow {
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 15px solid #ffd700;
+            filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.8));
+        }
+
+        .ribbon-bow::after {
+            content: '';
+            position: absolute;
+            top: 10px;
+            left: -10px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 15px solid #ffd700;
+        }
+
+        .gift1 {
+            top: 720px;
+            left: calc(50% - 140px);
+            width: 55px;
+            height: 45px;
+            background: linear-gradient(135deg, #c41e3a 0%, #ff0000 50%, #c41e3a 100%);
+            animation: giftBounce 2s ease-in-out infinite;
+        }
+
+        .gift2 {
+            top: 715px;
+            left: calc(50% - 60px);
+            width: 48px;
+            height: 40px;
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 50%, #1e3a8a 100%);
+            animation: giftBounce 2s ease-in-out 0.3s infinite;
+        }
+
+        .gift3 {
+            top: 725px;
+            left: calc(50% + 20px);
+            width: 50px;
+            height: 42px;
+            background: linear-gradient(135deg, #15803d 0%, #22c55e 50%, #15803d 100%);
+            animation: giftBounce 2s ease-in-out 0.6s infinite;
+        }
+
+        .gift4 {
+            top: 718px;
+            left: calc(50% + 90px);
+            width: 45px;
+            height: 38px;
+            background: linear-gradient(135deg, #7e22ce 0%, #a855f7 50%, #7e22ce 100%);
+            animation: giftBounce 2s ease-in-out 0.9s infinite;
+        }
+
+        .gift5 {
+            top: 722px;
+            left: calc(50% + 150px);
+            width: 42px;
+            height: 36px;
+            background: linear-gradient(135deg, #ea580c 0%, #f97316 50%, #ea580c 100%);
+            animation: giftBounce 2s ease-in-out 1.2s infinite;
+        }
+
+        @keyframes giftBounce {
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+            50% {
+                transform: translateY(-15px) scale(1.05);
+            }
+        }
+
+        .ground {
+            position: absolute;
+            top: 750px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 500px;
+            height: 60px;
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(10px);
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-50px) scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+            padding: 40px 50px;
+            border-radius: 20px;
+            box-shadow:
+                0 20px 60px rgba(0, 0, 0, 0.5),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            animation: slideIn 0.4s ease;
+            position: relative;
+        }
+
+        .modal-title {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #c41e3a;
+            margin-bottom: 25px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .modal-body {
+            font-size: 1.4em;
+            color: #333;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+
+        .modal-account {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            border-radius: 10px;
+            font-family: 'Courier New', monospace;
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin: 20px 0;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+            border: 2px solid #dee2e6;
+        }
+
+        .close-btn {
+            background: linear-gradient(135deg, #c41e3a 0%, #ff0000 100%);
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            font-size: 1.2em;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(196, 30, 58, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .close-btn:hover {
+            background: linear-gradient(135deg, #ff0000 0%, #c41e3a 100%);
+            box-shadow: 0 7px 20px rgba(196, 30, 58, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .close-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 3px 10px rgba(196, 30, 58, 0.4);
+        }
+
+        .gift-icon {
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: giftIconBounce 1s ease-in-out infinite;
+        }
+
+        @keyframes giftIconBounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 10px 10px 60px;
+            }
+
+            .container {
+                transform: scale(0.65);
+                transform-origin: center center;
+            }
+
+            .message {
+                font-size: 2em;
+                margin-bottom: 30px;
+            }
+
+            .modal-content {
+                padding: 30px 25px;
+                width: 95%;
+            }
+
+            .modal-title {
+                font-size: 2em;
+            }
+
+            .modal-body {
+                font-size: 1.2em;
+            }
+
+            .modal-account {
+                font-size: 1.1em;
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 10px 10px 40px;
+            }
+
+            .container {
+                transform: scale(0.45);
+                transform-origin: center center;
+            }
+
+            .message {
+                font-size: 1.5em;
+                margin-bottom: 20px;
+            }
+
+            .modal-content {
+                padding: 25px 20px;
+            }
+
+            .modal-title {
+                font-size: 1.7em;
+            }
+
+            .modal-body {
+                font-size: 1em;
+            }
+
+            .modal-account {
+                font-size: 1em;
+                padding: 12px;
+            }
+
+            .close-btn {
+                padding: 10px 25px;
+                font-size: 1em;
+            }
+
+            .gift-icon {
+                font-size: 2.5em;
+            }
+        }
+
+        @media (min-width: 1200px) {
+            body {
+                padding: 20px 20px 100px;
+            }
+
+            .container {
+                transform: scale(1.15);
+            }
+
+            .message {
+                font-size: 3.5em;
+                margin-bottom: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="message">🎄 Merry Christmas! 🎄</div>
+
+    <div class="container">
+        <div class="tree">
+            <div class="star">⭐</div>
+
+            <div class="tree-layer layer1"><div class="branch"></div></div>
+            <div class="tree-layer layer2"><div class="branch"></div></div>
+            <div class="tree-layer layer3"><div class="branch"></div></div>
+            <div class="tree-layer layer4"><div class="branch"></div></div>
+            <div class="tree-layer layer5"><div class="branch"></div></div>
+            <div class="tree-layer layer6"><div class="branch"></div></div>
+            <div class="tree-layer layer7"><div class="branch"></div></div>
+            <div class="tree-layer layer8"><div class="branch"></div></div>
+
+            <div class="trunk"></div>
+            <div class="ground"></div>
+        </div>
+
+        <div class="gift gift1">
+            <div class="ribbon-bow"></div>
+        </div>
+        <div class="gift gift2">
+            <div class="ribbon-bow"></div>
+        </div>
+        <div class="gift gift3">
+            <div class="ribbon-bow"></div>
+        </div>
+        <div class="gift gift4">
+            <div class="ribbon-bow"></div>
+        </div>
+        <div class="gift gift5">
+            <div class="ribbon-bow"></div>
+        </div>
+    </div>
+
+    <div class="modal" id="donationModal">
+        <div class="modal-content">
+            <div class="gift-icon">🎁</div>
+            <h2 class="modal-title">불우이웃 돕기</h2>
+            <div class="modal-body">
+                <div class="modal-account">
+                    한재호<br>
+                    신한 110-552-173189
+                </div>
+            </div>
+            <button class="close-btn" onclick="closeModal()">닫기</button>
+        </div>
+    </div>
+
+    <script>
+        const colors = ['#ff0000', '#ffd700', '#00ff00', '#0066ff', '#ff1493', '#00ffff', '#ff8c00', '#9d4edd'];
+
+        function createOrnaments() {
+            const tree = document.querySelector('.tree');
+            const ornamentData = [
+                // Layer 1-2
+                { top: 70, left: -15, size: 16 },
+                { top: 70, left: 15, size: 16 },
+                { top: 105, left: -25, size: 18 },
+                { top: 105, left: 25, size: 18 },
+                { top: 120, left: 0, size: 17 },
+                // Layer 3-4
+                { top: 160, left: -35, size: 19 },
+                { top: 160, left: 35, size: 19 },
+                { top: 185, left: -50, size: 20 },
+                { top: 185, left: 50, size: 20 },
+                { top: 210, left: -20, size: 18 },
+                { top: 210, left: 20, size: 18 },
+                // Layer 5-6
+                { top: 285, left: -55, size: 21 },
+                { top: 285, left: 55, size: 21 },
+                { top: 305, left: -75, size: 22 },
+                { top: 305, left: 75, size: 22 },
+                { top: 330, left: -30, size: 20 },
+                { top: 330, left: 30, size: 20 },
+                { top: 360, left: -90, size: 23 },
+                { top: 360, left: 90, size: 23 },
+                // Layer 7-8
+                { top: 450, left: -80, size: 24 },
+                { top: 450, left: 80, size: 24 },
+                { top: 475, left: -105, size: 25 },
+                { top: 475, left: 105, size: 25 },
+                { top: 500, left: -40, size: 22 },
+                { top: 500, left: 40, size: 22 },
+                { top: 550, left: -115, size: 26 },
+                { top: 550, left: 115, size: 26 },
+                { top: 570, left: -60, size: 24 },
+                { top: 570, left: 60, size: 24 },
+            ];
+
+            ornamentData.forEach((data, index) => {
+                const ornament = document.createElement('div');
+                ornament.className = 'ornament';
+                ornament.style.top = data.top + 'px';
+                ornament.style.left = data.left + 'px';
+                ornament.style.width = data.size + 'px';
+                ornament.style.height = data.size + 'px';
+                ornament.style.backgroundColor = colors[index % colors.length];
+                ornament.style.color = colors[index % colors.length];
+                ornament.style.animationDelay = (index * 0.15) + 's';
+                tree.appendChild(ornament);
+            });
+        }
+
+        function createLights() {
+            const tree = document.querySelector('.tree');
+            const lightPositions = [
+                { top: 55, left: -20 },
+                { top: 55, left: 20 },
+                { top: 80, left: -35 },
+                { top: 80, left: 35 },
+                { top: 115, left: -45 },
+                { top: 115, left: 45 },
+                { top: 145, left: -55 },
+                { top: 145, left: 0 },
+                { top: 145, left: 55 },
+                { top: 175, left: -65 },
+                { top: 175, left: 65 },
+                { top: 220, left: -70 },
+                { top: 220, left: 70 },
+                { top: 250, left: -80 },
+                { top: 250, left: 0 },
+                { top: 250, left: 80 },
+                { top: 295, left: -85 },
+                { top: 295, left: 85 },
+                { top: 325, left: -95 },
+                { top: 325, left: 95 },
+                { top: 370, left: -100 },
+                { top: 370, left: 0 },
+                { top: 370, left: 100 },
+                { top: 415, left: -110 },
+                { top: 415, left: 110 },
+                { top: 460, left: -115 },
+                { top: 460, left: 115 },
+                { top: 510, left: -120 },
+                { top: 510, left: 0 },
+                { top: 510, left: 120 },
+                { top: 560, left: -125 },
+                { top: 560, left: 125 },
+            ];
+
+            lightPositions.forEach((pos, index) => {
+                const light = document.createElement('div');
+                light.className = 'light';
+                light.style.top = pos.top + 'px';
+                light.style.left = pos.left + 'px';
+                const color = colors[index % colors.length];
+                light.style.backgroundColor = color;
+                light.style.color = color;
+                light.style.animationDelay = (index * 0.1) + 's';
+                tree.appendChild(light);
+            });
+        }
+
+        function createSnowflakes() {
+            setInterval(() => {
+                const snowflake = document.createElement('div');
+                snowflake.className = 'snowflake';
+                snowflake.innerHTML = ['❄', '❅', '❆'][Math.floor(Math.random() * 3)];
+                snowflake.style.left = Math.random() * 100 + 'vw';
+                snowflake.style.animationDuration = (Math.random() * 4 + 3) + 's';
+                snowflake.style.opacity = Math.random() * 0.6 + 0.4;
+                snowflake.style.fontSize = (Math.random() * 1 + 0.8) + 'em';
+                document.body.appendChild(snowflake);
+
+                setTimeout(() => {
+                    snowflake.remove();
+                }, 7000);
+            }, 150);
+        }
+
+        function openModal() {
+            const modal = document.getElementById('donationModal');
+            modal.classList.add('active');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('donationModal');
+            modal.classList.remove('active');
+        }
+
+        function addGiftClickEvents() {
+            const gifts = document.querySelectorAll('.gift');
+            gifts.forEach(gift => {
+                gift.addEventListener('click', openModal);
+            });
+        }
+
+        // 모달 배경 클릭시 닫기
+        document.getElementById('donationModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // ESC 키로 모달 닫기
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        createOrnaments();
+        createLights();
+        createSnowflakes();
+        addGiftClickEvents();
+    </script>
+</body>
+</html>
